@@ -17,6 +17,5 @@ before_install:
 branches:
   only:
     - master
-    - semedo
-
+    
 script: grails -Dgeb.env=firefox test-app --non-interactive --stacktrace
