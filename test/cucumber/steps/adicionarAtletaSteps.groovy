@@ -67,8 +67,8 @@ And(~/^Cadastro um novo atleta "([^"]*)" com o CPF "([^"]*)"$/){ String nome, cp
 }
 
 Then(~/^Eu posso ver que na página de Atletas o no atleta não foi adicionado$/){->
-	to AtletasPage
-	at AtletasPage
+	to AtletaPage
+	at AtletaPage
 }
 
 //criar AtletasPage
