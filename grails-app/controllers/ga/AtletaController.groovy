@@ -1,16 +1,15 @@
 package ga
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
 @Transactional(readOnly = true)
 class AtletaController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
-        respond Atleta.list(params), model:[atletaInstanceCount: Atleta.count()]
+        respond Atleta.list(params), model: [atletaInstanceCount: Atleta.count()]
     }
 
     def show(Atleta atletaInstance) {
@@ -21,11 +20,6 @@ class AtletaController {
         respond new Atleta(params)
     }
 
-    public Atleta criarAtleta() {
-        return new Atleta(params)
-    }
-
-
     @Transactional
     def save(Atleta atletaInstance) {
         if (atletaInstance == null) {
@@ -34,11 +28,11 @@ class AtletaController {
         }
 
         if (atletaInstance.hasErrors()) {
-            respond atletaInstance.errors, view:'create'
+            respond atletaInstance.errors, view: 'create'
             return
         }
 
-        atletaInstance.save flush:true
+        atletaInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
@@ -47,11 +41,6 @@ class AtletaController {
             }
             '*' { respond atletaInstance, [status: CREATED] }
         }
-    }
-
-    public boolean saveAtleta(Atleta atleta) {
-        atleta.save flush : true
-        true
     }
 
     def edit(Atleta atletaInstance) {
@@ -66,18 +55,18 @@ class AtletaController {
         }
 
         if (atletaInstance.hasErrors()) {
-            respond atletaInstance.errors, view:'edit'
+            respond atletaInstance.errors, view: 'edit'
             return
         }
 
-        atletaInstance.save flush:true
+        atletaInstance.save flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Atleta.label', default: 'Atleta'), atletaInstance.id])
                 redirect atletaInstance
             }
-            '*'{ respond atletaInstance, [status: OK] }
+            '*' { respond atletaInstance, [status: OK] }
         }
     }
 
@@ -89,17 +78,16 @@ class AtletaController {
             return
         }
 
-        atletaInstance.delete flush:true
+        atletaInstance.delete flush: true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'Atleta.label', default: 'Atleta'), atletaInstance.id])
-                redirect action:"index", method:"GET"
+                redirect action: "index", method: "GET"
             }
-            '*'{ render status: NO_CONTENT }
+            '*' { render status: NO_CONTENT }
         }
     }
-
 
     protected void notFound() {
         request.withFormat {
@@ -107,7 +95,7 @@ class AtletaController {
                 flash.message = message(code: 'default.not.found.message', args: [message(code: 'atleta.label', default: 'Atleta'), params.id])
                 redirect action: "index", method: "GET"
             }
-            '*'{ render status: NOT_FOUND }
+            '*' { render status: NOT_FOUND }
         }
     }
 }
