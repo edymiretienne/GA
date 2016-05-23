@@ -25,14 +25,15 @@ Then(~'^O sistema não permite o cadastro duplicado do CPF "([^"]*)"$') { String
 }
 
 def createAtleta(String nome, String cpf, AtletaController controlador) {
-	controlador.params << [cpf: cpf, nome: nome]
+	controlador.params << [cpf: cpf, nome: nome, data_nascimento: "", contrato:""]
 	controlador.save()
 	controlador.response.reset()
 }
 
+
 def verificaAtleta(String nome, String cpf, AtletaController controlador) {
 	if (Atleta.findByCpf(cpf)==null) {
-		controlador.params << [cpf: cpf, nome: nome]
+		controlador.params << [cpf: cpf, nome: nome, data_nascimento: "", contrato:""]
 		controlador.save()
 		controlador.response.reset()
 	}
