@@ -19,7 +19,11 @@ class AtletaController {
     def create() {
         respond new Atleta(params)
     }
-
+	
+	 public Atleta criarAtleta() {
+        return new Atleta(params)
+    }
+	
     @Transactional
     def save(Atleta atletaInstance) {
         if (atletaInstance == null) {
